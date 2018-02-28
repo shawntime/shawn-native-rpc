@@ -1,4 +1,18 @@
-### 配置
+github：https://github.com/shawntime/shawn-native-rpc
+
+#### RPC过程详解
+![image.png](http://upload-images.jianshu.io/upload_images/2511194-657aa186a0b9c6d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![image.png](http://upload-images.jianshu.io/upload_images/2511194-e8b12419c0f63b87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+#### 实现内容
+* json序列化
+* zookeeper实现服务端服务注册和客户端的服务发现和负载均衡
+* 自动扫描服务端所提供的接口，并注册到zookeeper中
+* 自动生成客户端动态代理对象
+* socket实现通讯
+
+#### 配置
 ##### provider配置
 
 > 配置naive-rpc.properties文件
@@ -180,4 +194,3 @@ public class LoginService implements ILoginService {
     }
 }
 ```
-
