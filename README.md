@@ -1,3 +1,4 @@
+### 配置
 ##### provider配置
 
 > 配置naive-rpc.properties文件
@@ -104,4 +105,79 @@ scanPackage=com.shawntime.rpc.api
 </beans>
 ```
 
+### Demo
+* 接口定义，用RpcService注解
+```java
+@RpcService
+public interface IUserService {
+
+    UserOut getUserInfo(UserIn userIn, Integer level);
+
+    void addUserProvince(ProvinceIn in);
+}
+```
+
+* 提供方
+
+```java
+package com.shawntime.test.provider;
+
+import com.shawntime.rpc.api.IUserService;
+import com.shawntime.rpc.api.contract.ProvinceIn;
+import com.shawntime.rpc.api.contract.UserIn;
+import com.shawntime.rpc.api.contract.UserOut;
+import org.springframework.stereotype.Component;
+
+@Component
+public class UserService implements IUserService {
+
+    public UserOut getUserInfo(UserIn userIn, Integer level) {
+        UserOut userOut = new UserOut();
+        if (level > 0) {
+            userOut.setUserId(1);
+            userOut.setAddress("安徽芜湖");
+            userOut.setAge(18);
+            userOut.setUserName(userIn.getUserName());
+        } else {
+            userOut.setUserId(2);
+            userOut.setAddress("河北保定");
+            userOut.setAge(19);
+            userOut.setUserName(userIn.getUserName());
+        }
+        return userOut;
+    }
+
+    public void addUserProvince(ProvinceIn provinceIn) {
+        System.out.println(provinceIn);
+    }
+}
+
+```
+
+* 调用方
+
+```java
+@Component
+public class LoginService implements ILoginService {
+
+    @Resource
+    private IUserService userService;
+
+    public boolean login(String userName, String password, Integer level) {
+        UserIn userIn = new UserIn();
+        userIn.setUserName(userName);
+        userIn.setPassword(password);
+        UserOut userInfo = userService.getUserInfo(userIn, level);
+        System.out.println("userId:" + userInfo.getUserId()
+                + ", age:" + userInfo.getAge()
+                + ", address:" + userInfo.getAddress());
+        return userInfo != null;
+    }
+
+    public int addUserProvince(ProvinceIn in) {
+        userService.addUserProvince(in);
+        return 1;
+    }
+}
+```
 
