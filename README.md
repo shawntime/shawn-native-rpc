@@ -12,6 +12,14 @@ github：https://github.com/shawntime/shawn-native-rpc
 * 自动生成客户端动态代理对象
 * socket实现通讯
 
+#### 模块说明
+* native-core：公共包：注解、异常定义、通讯协议、序列化、zookeeper客户端封装以及包扫描，配置加载等工具类
+* native-customer：调用方需引入的模块，实现自动生成客户端动态代理对象，zk的服务发现和负载均衡，以及通信实现
+* native-provider：服务提供方需引入的模块，实现了接口客户端请求并处理，zk的服务注册
+* native-interface：对外提供服务的接口定义
+* shawn-test-provider：提供方demo
+* shawn-test-customer：调用方demo
+
 #### 配置
 ##### provider配置
 
@@ -194,3 +202,6 @@ public class LoginService implements ILoginService {
     }
 }
 ```
+
+
+
